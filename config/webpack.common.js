@@ -1,7 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const friendlyErrorsWebpackPlugin = require("friendly-errors-webpack-plugin");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 module.exports = {
   entry: {
@@ -10,9 +10,8 @@ module.exports = {
   },
   output: {
     //出口文件
-    publicPath: "/",
+    // publicPath: "/",
     path: path.resolve(__dirname, "../dist"),
-    filename: "bundle.[hash].js",
   },
   module: {
     rules: [
@@ -46,7 +45,8 @@ module.exports = {
         // CSS, PostCSS, and Sass
         test: /\.(scss|css)$/,
         use: [
-          "style-loader",
+          // "style-loader",
+          MiniCssExtractPlugin.loader,
           {
             loader: "css-loader",
             options: {
@@ -59,7 +59,8 @@ module.exports = {
       {
         test: /\.(less|css)$/,
         use: [
-          'style-loader',
+          // 'style-loader',
+          MiniCssExtractPlugin.loader,
           {
             loader: 'css-loader',
             options: {
@@ -73,7 +74,8 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          'style-loader',
+          // 'style-loader',
+          MiniCssExtractPlugin.loader,
           'css-loader',
           'postcss-loader'
         ]
@@ -98,6 +100,10 @@ module.exports = {
     //     moduleName: "babel-runtime", //调用辅助 设置模块（module）名字/路径
     //   },
     // ],
+    new MiniCssExtractPlugin({
+      filename: './style/[name].[hash].css',
+      chunkFilename: './style/chunk.[name].[hash].css'
+    })
   ],
   resolve: {
     extensions: ["", ".ts", ".tsx", ".js", ".jsx"],

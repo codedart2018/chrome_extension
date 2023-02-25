@@ -4,6 +4,9 @@ module.exports = {
   mode: 'development',
   //sourceMap 原映射
   devtool: "inline-source-map",
+  output: {
+    filename: "./js/[name].[hash].js",
+  },
   performance: {
     hints: false
   },
